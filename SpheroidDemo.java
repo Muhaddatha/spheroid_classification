@@ -19,9 +19,6 @@ import java.util.Scanner;
 public class SpheroidDemo {
     
     public static void main(String[] args){
-        System.out.println("Hey, test");
-        
-        
         /*step 1: check if input.txt exists
         test cases related to the file:
         1. The file does not exist
@@ -29,15 +26,16 @@ public class SpheroidDemo {
        */
         
        Scanner inFile;
-       float value1;
+       float value1 = 0;
        //This variable holds the radius value read from a file
-       float value2;
+       float value2 = 0;
        String lineFromInFile = "";
        boolean debugging = true;
        
        
-       try{
-           inFile = new Scanner(new File("input.txt")); //Opens the file
+       try{ 
+           
+           inFile = new Scanner(new File("inpu.txt")); //Opens the file
            
            if(inFile.hasNext()){ //checking if file is empty
                
@@ -97,6 +95,117 @@ public class SpheroidDemo {
        
        //remember to close the file
         
-    }
+    }//end of main
+ 
     
+    class Spheroid{
+        //class attributes
+        private float equatorialRadius;
+        private float polarRadius;
+        private double volume;
+        private String spheroidType;
+        public String[] spheroidInfo;
+        
+        //class methods
+        
+        //Class constructor
+        Spheroid(float eR, float pR){
+            this.setERadius(eR);
+            this.setPRadius(pR);
+            volume = 0;
+            spheroidType = "";
+            spheroidInfo = new String[4];
+        }
+        
+        
+        /*
+        pre-condition: The instance of the spheroid object exists
+        post-condition: The equatorial radius of the spheroid is returned
+        */
+        public float getERadius(){
+            return equatorialRadius;
+        }
+        
+        
+        /*
+        pre-condition: The instance of the spheroid object exists
+        post-condition: The polar radius of the spheroid is returned
+        */
+        public float getPRadius(){
+            return polarRadius;
+        }
+        
+        
+        /*
+        pre-condition: The instance of the spheroid object exists
+        post-condition: The equatorial radius is set to a non-zero and positive
+                        user specified value.
+                        The shpereInfo array contains the information about the
+                        equatorial radius length.
+        */
+        private void setERadius(float equatorialRadius){
+            this.equatorialRadius = equatorialRadius;
+            spheroidInfo[0] = Float.toString(equatorialRadius);
+        }
+        
+        
+        /*
+        pre-condition: The instance of the spheroid object exists
+        post-condition: The polar radius is set to a non-zero and positive 
+                        user specified value.
+                        The shpereInfo array contains the information about the
+                        polar radius length.
+        */
+        private void setPRadius(float polarRadius){
+            this.polarRadius = polarRadius;
+            spheroidInfo[1] = Float.toString(polarRadius);
+        }
+        
+        
+        /*
+        pre-condition: The instance of the spheroid object exists. The radii
+                       values are non-zero and positive.
+        post-condition: The type of the spheroid is returned. The spheroidInfo
+                        contains information about the type of spheroid.
+        */
+        public String classifyType(){
+            if(equatorialRadius > polarRadius){
+                spheroidType = "Oblate";
+            }
+            else if(polarRadius > equatorialRadius){
+                spheroidType = "Prolate";
+            }
+            else{
+                spheroidType = "Sphere";
+            }
+            
+            spheroidInfo[3] = spheroidType;
+            return spheroidType;
+            
+        }
+        
+        
+        /*
+        pre-condition: The instance of the spheroid object exists. The radii
+                       values are non-zero and positive.
+        post-condition: The volume of the spheroid is retunred.
+        */
+        public double calculateVolume(){
+           volume = (4/3)*Math.PI*Math.pow(equatorialRadius, 2)*polarRadius;
+           spheroidInfo[2] = Double.toString(volume);
+           return volume;
+        }
+        
+        
+        /*
+        pre-condition: The instance of the spheroid object exists. The radii
+        are non-zero and positive. The calculateMethod has been called previously.
+        post-condition: A String array containing information about the spheroid
+                        is returned.
+        */
+        public String[] printInfo(){
+            return spheroidInfo;
+        }
+        
+    }
 }
