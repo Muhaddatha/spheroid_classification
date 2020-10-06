@@ -47,27 +47,63 @@ public class SpheroidDemo {
                }
                
                while(inFile.hasNext()){
+                   
+                   
                    lineFromInFile = inFile.nextLine(); //gets one line at a time 
                    //from a file
-                   String[] fileLineInfo = lineFromInFile.split(" ");
-                   //This line splits the words and numbers in the file line
+                   
                    if(debugging){
                        System.out.println("Testing: line from file: " + lineFromInFile);
                    }
-                   int counter = 0;
-                   for(String ss : fileLineInfo){ //only the first two values 
-                       //in the file are needed
-                       if(counter == 0){
-                           value1 = Float.parseFloat(ss);
-                       }
-                       else if (counter == 1){
-                           value2 = Float.parseFloat(ss);
-                       }
-                       else{
-                           break;
-                       }
-                       counter++;
+                   
+                   
+                   if(!lineFromInFile.contains("//")){
+                       //checking to see if the line from input.txt is a comment
+                       
+                       
+                       String[] fileLineInfo = lineFromInFile.split(" ");
+                        //This line splits the words and numbers in the file line
+                        
+                        
+                        //checking if inputs are valid aka are numbers
+                        //The first statement inside the if paranthesis 
+                        //helps skip lines with only one input
+                        if(lineFromInFile.length() > 1 && (fileLineInfo[0].chars().allMatch(Character::isDigit) || 
+                                fileLineInfo[0].matches("[-+]?[0-9]*\\.?[0-9]+")) &&
+                                (fileLineInfo[1].chars().allMatch(Character::isDigit) || 
+                                fileLineInfo[1].matches("[-+]?[0-9]*\\.?[0-9]+"))){
+                            //checking if the two inputs are number: integers or floats
+                            
+                            value1 = Float.parseFloat(fileLineInfo[0]);
+                            value2 = Float.parseFloat(fileLineInfo[1]);
+                            
+                            if(debugging){
+                                System.out.println("Found a valid input! value1: " + value1 + " value2: " + value2);
+                            }
+                            
+                            //input into array
+                            //constrait: the radii values must be positive and greater than 0
+                            if(value1 > 0 && value2 > 0){
+                                
+                            }
+   
+                        }
+                        else{
+                            System.out.println("Invalid input: " + lineFromInFile);
+                        }
+              
                    }
+                   else{
+                       System.out.println("A comment incoutered in input.txt: " + lineFromInFile);
+                   }
+                   
+                   
+                   
+                    
+                    
+                   
+                   
+                   
                    
                    if(debugging){
                        System.out.println("Testing the values found in the file line \n"
