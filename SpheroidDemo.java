@@ -25,7 +25,7 @@ public class SpheroidDemo {
         2. The file is empty
        */
         
-       Scanner inFile;
+      
        float value1 = 0;
        //This variable holds the radius value read from a file
        float value2 = 0;
@@ -35,7 +35,10 @@ public class SpheroidDemo {
        
        try{ 
            
-           inFile = new Scanner(new File("inpu.txt")); //Opens the file
+           File inputFile = new File("input.txt");
+           
+            Scanner inFile = new Scanner(inputFile);
+          
            
            if(inFile.hasNext()){ //checking if file is empty
                
