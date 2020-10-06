@@ -3,18 +3,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.Scanner;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+import java.util.ArrayList;
 
-
-//temporary comment
 
 /**
- *
- * @author 3pear
+ * Name :Muhaddatha Abdulghani
+ * Professor: John Baugh
+ * Class: CIS 296-001
+ * Description: This program takes two radii values for a spheroid and calculates
+ * calculaets its volume and classifies it. This information is printed to the screen.
  */
 public class SpheroidDemo {
     
@@ -30,8 +27,8 @@ public class SpheroidDemo {
        //This variable holds the radius value read from a file
        float value2 = 0;
        String lineFromInFile = "";
-       boolean debugging = true;
-       
+       boolean debugging = false;
+       ArrayList<Spheroid> spheroidCollection = new ArrayList<> ();
        
        try{ 
            
@@ -64,7 +61,6 @@ public class SpheroidDemo {
                        String[] fileLineInfo = lineFromInFile.split(" ");
                         //This line splits the words and numbers in the file line
                         
-                        
                         //checking if inputs are valid aka are numbers
                         //The first statement inside the if paranthesis 
                         //helps skip lines with only one input
@@ -81,38 +77,61 @@ public class SpheroidDemo {
                                 System.out.println("Found a valid input! value1: " + value1 + " value2: " + value2);
                             }
                             
+                            
+                            
                             //input into array
                             //constrait: the radii values must be positive and greater than 0
                             if(value1 > 0 && value2 > 0){
+                                Spheroid s = new Spheroid(value1, value2);
+                                //s = new Spheroid(value1, value2);
                                 
+                                s.setERadius(value1);
+                                s.setPRadius(value2);
+                                
+                                spheroidCollection.add(s);
+                                
+                                if(debugging){
+                                    
+                                    System.out.print("Testing spheroid's print mehtod: ");
+                                    String[] spheroidInfo;
+                                    
+                                    spheroidInfo = s.printInfo();
+                                    
+                                    for(int i = 0; i < 4; i++){
+                                        System.out.print(spheroidInfo[i] + "\t");
+                                    }
+                                    
+                                    System.out.println();
+                                }
+                                
+                               spheroidCollection.add(s); //adding a spheroid to the array list
+                            }
+                            else{
+                                System.out.println("Invalid input: " + lineFromInFile);
                             }
    
                         }
-                        else{
+                        else if(!lineFromInFile.isEmpty()){
                             System.out.println("Invalid input: " + lineFromInFile);
                         }
               
                    }
                    else{
                        System.out.println("A comment incoutered in input.txt: " + lineFromInFile);
+                    }
+                   
+         
+               }
+               
+               if(spheroidCollection.size() == 0){
+                       System.out.println("No valid inputs for a spheroid found in the file.");
                    }
-                   
-                   
-                   
-                    
-                    
-                   
-                   
-                   
-                   
-                   if(debugging){
-                       System.out.println("Testing the values found in the file line \n"
-                               + "value1: " + value1 + " value2: " + value2);
+               else{
+                   for(int i = 0; i < spheroidCollection.size(); i++){
+                       System.out.print(spheroidCollection.get(i).calculateVolume() + "\t");
+                       System.out.println(spheroidCollection.get(i).classifyType());
+                       
                    }
-                   
-                   //Checking to make sure value1 and value2 are float.
-                   
-                   
                }
            } 
            else {
@@ -137,7 +156,7 @@ public class SpheroidDemo {
     }//end of main
  
     
-    class Spheroid{
+    private static class Spheroid{
         //class attributes
         private float equatorialRadius;
         private float polarRadius;
@@ -149,11 +168,13 @@ public class SpheroidDemo {
         
         //Class constructor
         Spheroid(float eR, float pR){
-            this.setERadius(eR);
-            this.setPRadius(pR);
+            equatorialRadius = eR;
+            polarRadius = pR;
             volume = 0;
             spheroidType = "";
             spheroidInfo = new String[4];
+            this.classifyType();
+            this.calculateVolume();
         }
         
         
@@ -182,7 +203,7 @@ public class SpheroidDemo {
                         The shpereInfo array contains the information about the
                         equatorial radius length.
         */
-        private void setERadius(float equatorialRadius){
+        void setERadius(float equatorialRadius){
             this.equatorialRadius = equatorialRadius;
             spheroidInfo[0] = Float.toString(equatorialRadius);
         }
@@ -195,7 +216,7 @@ public class SpheroidDemo {
                         The shpereInfo array contains the information about the
                         polar radius length.
         */
-        private void setPRadius(float polarRadius){
+        void setPRadius(float polarRadius){
             this.polarRadius = polarRadius;
             spheroidInfo[1] = Float.toString(polarRadius);
         }
