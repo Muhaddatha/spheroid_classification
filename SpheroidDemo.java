@@ -8,11 +8,13 @@ import java.util.ArrayList;
 
 /**
  * Name :Muhaddatha Abdulghani
- * Professor: John Baugh
+ * Professor: Dr. John Baugh
  * Class: CIS 296-001
  * Description: This program takes two radii values for a spheroid and calculates
- * calculaets its volume and classifies it. This information is printed to the screen.
+ * calculates its volume and classifies it. This information is printed to the screen.
  */
+
+
 public class SpheroidDemo {
     
     public static void main(String[] args){
@@ -83,12 +85,7 @@ public class SpheroidDemo {
                             //constrait: the radii values must be positive and greater than 0
                             if(value1 > 0 && value2 > 0){
                                 Spheroid s = new Spheroid(value1, value2);
-                                //s = new Spheroid(value1, value2);
                                 
-                                s.setERadius(value1);
-                                s.setPRadius(value2);
-                                
-                                spheroidCollection.add(s);
                                 
                                 if(debugging){
                                     
@@ -123,16 +120,7 @@ public class SpheroidDemo {
          
                }
                
-               if(spheroidCollection.size() == 0){
-                       System.out.println("No valid inputs for a spheroid found in the file.");
-                   }
-               else{
-                   for(int i = 0; i < spheroidCollection.size(); i++){
-                       System.out.print(spheroidCollection.get(i).calculateVolume() + "\t");
-                       System.out.println(spheroidCollection.get(i).classifyType());
-                       
-                   }
-               }
+               
            } 
            else {
                //file is empty
@@ -140,17 +128,27 @@ public class SpheroidDemo {
            }
            inFile.close();
            
+           
+           
        }catch(FileNotFoundException ex){
            System.out.println("File was not found.");
        }
        
        
+       if(spheroidCollection.isEmpty()){
+            System.out.println("No valid inputs for a spheroid found in the file.");
+        }
+        else{
+           
+            for(int i = 0; i < spheroidCollection.size(); i++){
+                System.out.print(spheroidCollection.get(i).calculateVolume() + "\t");
+                System.out.println(spheroidCollection.get(i).classifyType());
+                       
+            }
+        }
+       
       
-       
-       
-       
-       
-       
+   
        //remember to close the file
         
     }//end of main
